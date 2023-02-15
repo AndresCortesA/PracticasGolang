@@ -14,6 +14,8 @@ func main() {
 	handlers.Create()
 	handlers.Insert()
 	handlers.Delete()
+	handlers.Edit()
+	handlers.Update()
 
 	log.Println("Server running........................")
 	http.ListenAndServe(":8080", nil)

@@ -1,4 +1,4 @@
-{{ define "create"}}
+{{ define "edit"}}
 {{ template "header"}}
 
 <div class="card">
@@ -6,19 +6,22 @@
     <div class="card-header">    Employee   </div>
     <div class="card-body">
         <!--  Recibe  -->
-        <form method="post" action="/insert">
+        <form method="post" action="/update">
+
+                <input type="hidden" value={{.Id}} class="form-control" name="id" id="id" placeholder="">
+
             <div class="form-group">
               <label for="">Name</label>
               <input type="text"
-                class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="">
+                class="form-control" name="name" value = {{.Name}} id="name" aria-describedby="helpId" placeholder="">
               <small id="helpId" class="form-text text-muted">Write your name</small>
             </div>
             <div class="form-group">
               <label for="">Mail</label>
-              <input type="email" class="form-control" name="mail" id="mail" aria-describedby="emailHelpId" placeholder="">
+              <input type="email" class="form-control" value = {{.Mail}} name="mail" id="mail" aria-describedby="emailHelpId" placeholder="">
               <small id="emailHelpId" class="form-text text-muted">Mail example name@mail.com</small>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">Modify</button>
             <a name="" id="" class="btn btn-danger" href="/" role="button">Back</a>
 
         </form>
