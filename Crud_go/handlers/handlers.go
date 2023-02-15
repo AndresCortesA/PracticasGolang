@@ -6,19 +6,41 @@ import (
 	"net/http"
 )
 
+type Employee struct {
+	Id         int
+	Name, Mail string
+}
+
 var tmpl = template.Must(template.ParseGlob("templates/*"))
 
 func Index() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		conect := conectiondb.ConectionDB()
-		insert, err := conect.Prepare("INSERT INTO employee(nameEmployee, mailEmployee)VALUES('Andriu', 'andri@correo.com')")
+		selectRegister, err := conect.Query("SELECT * FROM employee")
 		if err != nil {
 			panic(err.Error())
 		}
-		insert.Exec()
+		employee := Employee{}
+		arrayEmployee := []Employee{}
 
-		tmpl.ExecuteTemplate(w, "index", nil)
+		for selectRegister.Next() {
+			var id int
+			var name, mail string
+			err = selectRegister.Scan(&id, &name, &mail)
+			if err != nil {
+				panic(err.Error())
+			}
+			employee.Id = id
+			employee.Name = name
+			employee.Mail = mail
+
+			arrayEmployee = append(arrayEmployee, employee)
+		}
+		tmpl.ExecuteTemplate(w, "index", arrayEmployee)
+		// fmt.Println(arrayEmployee)
+
 	})
+
 }
 
 func Create() {
@@ -41,5 +63,19 @@ func Insert() {
 			http.Redirect(w, r, "/", http.StatusFound)
 
 		}
+	})
+}
+
+func Delete() {
+	http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
+		idEmployee := r.URL.Query().Get("id")
+		//fmt.Println(idEmployee)
+		conect := conectiondb.ConectionDB()
+		delete, err := conect.Prepare("DELETE FROM employee WHERE id=?")
+		if err != nil {
+			panic(err.Error())
+		}
+		delete.Exec(idEmployee)
+		http.Redirect(w, r, "/", http.StatusFound)
 	})
 }

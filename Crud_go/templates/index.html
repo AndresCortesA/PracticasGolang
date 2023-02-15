@@ -14,11 +14,19 @@
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>Andres</td>
-            <td>correo@gmail.com</td>
-            <td> Edit | Delete </td>
+            {{range.}}
+            <td>{{.Id}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Mail}}</td>
+            <td> Edit {{.Id}} | 
+              
+              <a name="" id="" class="btn btn-danger" href="/delete?id={{.Id}}" role="button">Delete</a>
+            
+            
+            </td>
           </tr>
+
+          {{end}}
         </tbody>
       </table>
 
