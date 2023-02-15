@@ -79,3 +79,50 @@ func Delete() {
 		http.Redirect(w, r, "/", http.StatusFound)
 	})
 }
+
+func Edit() {
+	http.HandleFunc("/edit", func(w http.ResponseWriter, r *http.Request) {
+
+		idEmployee := r.URL.Query().Get("id")
+		//fmt.Println(idEmployee)
+		conect := conectiondb.ConectionDB()
+		edit, err := conect.Query("SELECT *FROM employee WHERE id=?", idEmployee)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		employee := Employee{}
+		for edit.Next() {
+			var id int
+			var name, mail string
+			err = edit.Scan(&id, &name, &mail)
+			if err != nil {
+				panic(err.Error())
+			}
+			employee.Id = id
+			employee.Name = name
+			employee.Mail = mail
+		}
+
+		tmpl.ExecuteTemplate(w, "edit", employee)
+
+	})
+}
+
+func Update() {
+	http.HandleFunc("/update", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "POST" {
+			id := r.FormValue("id")
+			name := r.FormValue("name")
+			mail := r.FormValue("mail")
+			conect := conectiondb.ConectionDB()
+			update, err := conect.Prepare("UPDATE employee SET nameEmployee=?,mailEmployee=? WHERE id=?")
+			if err != nil {
+				panic(err.Error())
+			}
+			update.Exec(name, mail, id)
+			http.Redirect(w, r, "/", http.StatusFound)
+
+		}
+	})
+}
