@@ -1,5 +1,7 @@
-{{ define "index" }}
-{{ template "header" }}
+{{ define "index"}}
+{{ template "header"}}
+
+  <a name="" id="" class="btn btn-primary" href="/create" role="button">Add employee</a>
           
       <table class="table">
         <thead>
@@ -12,14 +14,22 @@
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>Andres</td>
-            <td>correo@gmail.com</td>
-            <td> Edit | Delete </td>
+            {{range.}}
+            <td>{{.Id}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Mail}}</td>
+            <td> Edit {{.Id}} | 
+              
+              <a name="" id="" class="btn btn-danger" href="/delete?id={{.Id}}" role="button">Delete</a>
+            
+            
+            </td>
           </tr>
+
+          {{end}}
         </tbody>
       </table>
 
-{{ template "footer" }}
+{{ template "footer"}}
 
 {{end}}

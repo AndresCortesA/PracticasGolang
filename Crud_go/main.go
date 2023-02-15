@@ -1,17 +1,20 @@
 package main
 
 import (
-	"html/template"
+	"Crud_go/handlers"
 	"log"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-var tmpl = template.Must(template.ParseGlob("templates/*"))
-
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		tmpl.ExecuteTemplate(w, "index", nil)
-	})
+
+	handlers.Index()
+	handlers.Create()
+	handlers.Insert()
+	handlers.Delete()
+
 	log.Println("Server running........................")
 	http.ListenAndServe(":8080", nil)
 }
