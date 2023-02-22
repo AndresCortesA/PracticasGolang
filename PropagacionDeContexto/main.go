@@ -18,8 +18,11 @@ func main() {
 		y el segundo es una funcion cancel con la cual trabajaremos para cancelar el contexto
 	*/
 	ctxCancel, cancel := context.WithCancel(ctx)
+	//se toma como prioridad y se ejecuta
+	cancel()
+
 	//se ejecuta al final de todo
-	defer cancel()
+	// defer cancel()
 	ctxTimeout, cancelTimeout := context.WithTimeout(ctxCancel, time.Second*2)
 	//se ejecuta al final de todo
 	defer cancelTimeout()
@@ -27,8 +30,8 @@ func main() {
 	select {
 	case <-ctxTimeout.Done():
 		println("terminado")
-	case <-ctxCancel.Done():
-		println("cancelado")
+		// case <-ctxCancel.Done():
+		// 	println("cancelado")
 	}
 
 }
