@@ -8,16 +8,19 @@ ejemplo:
 
 un arreglo {5,4,3,2,1,0}
 sus posiciones {0,1,2,3,4,5}
-lo que espero que salga: {5,4} esta es la primera iteracion
-						 {4,3}
-						 {3,2}
-						 {+,+}
+lo que espero que salga:
+
+Ordenando:  [4 3 2 1 0 5]
+Ordenando:  [3 2 1 0 4 5]
+Ordenando:  [2 1 0 3 4 5]
+Ordenando:  [1 0 2 3 4 5]
+Ordenando:  [0 1 2 3 4 5]
 */
 
 func main() {
 
 	arreglo := []int{5, 4, 3, 2, 1, 0}
-	fmt.Println("un arreglo: ", arreglo, "\n")
+	fmt.Println("un arreglo: ", arreglo)
 	ordenar(arreglo)
 }
 
