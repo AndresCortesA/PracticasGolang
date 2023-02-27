@@ -63,5 +63,5 @@ iteracion pares: { 5 4 }
 iteracion pares: { 4 3 }
 iteracion pares: { 3 2 }
 iteracion pares: { 2 1 }
-iteracion pares: { 1 0 
+iteracion pares: { 1 0 }
 ```
